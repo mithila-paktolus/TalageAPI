@@ -1,0 +1,2504 @@
+
+===== PAGE 1 =====
+ 
+ 
+Talage Insurance API 
+© 2023 Talage 
+6/27/2023 
+ 
+ 
+
+===== PAGE 2 =====
+THIS ENTIRE 
+DOCUMENT IS 
+CONFIDENTIAL  
+===== PAGE 3 =====
+Talage Insurance API2
+© 2022 Talage
+Table of Contents
+Part IOverview 4
+................................................................................................................................... 51First Step: Codes
+................................................................................................................................... 62Second Step: Basic Information
+................................................................................................................................... 73Third Step: Location Information
+................................................................................................................................... 84Fourth Step: Questions
+................................................................................................................................... 95Fifth Step: Quote and Bind
+................................................................................................................................... 106Integration Checklist
+Part IIGetting Started 14
+................................................................................................................................... 151Authentication
+................................................................................................................................... 172Common Elements
+................................................................................................................................... 193Contact Talage Help
+Part IIISet Up Endpoints 20
+................................................................................................................................... 221Step 1: Categories and Codes Set Up
+.......................................................................................................................................................... 23Get Industry Categories 
+.......................................................................................................................................................... 24Get Industry Codes 
+.......................................................................................................................................................... 25Get Activity Codes 
+................................................................................................................................... 272Step 2: Basic Info and Application Set Up
+.......................................................................................................................................................... 28Create Application 
+.......................................................................................................................................................... 30Get Application 
+.......................................................................................................................................................... 31Update Application 
+.......................................................................................................................................................... 35Validate Application 
+.......................................................................................................................................................... 37Get Application List 
+................................................................................................................................... 403Step 3: Location Set Up
+.......................................................................................................................................................... 41Add Location 
+.......................................................................................................................................................... 46Update Location 
+.......................................................................................................................................................... 50Delete Location 
+................................................................................................................................... 534Step 4: Questions
+.......................................................................................................................................................... 55Get Questions 
+.......................................................................................................................................................... 56Saved Questions 
+.......................................................................................................................................................... 57Parent-Child Hierarchy 
+.......................................................................................................................................................... 59Question Types 
+......................................................................................................................................................... 61Yes/No Question Sample Response
+......................................................................................................................................................... 62Checkbox Question Sample Response
+......................................................................................................................................................... 63Select List Question Sample Response
+......................................................................................................................................................... 64Multiple-line Text Question Sample Response
+......................................................................................................................................................... 65Single-line Text Question Sample Response
+................................................................................................................................... 665Step 5: Quote and Bind Set Up
+.......................................................................................................................................................... 70Start Quoting 
+.......................................................................................................................................................... 71Check for Quotes 
+.......................................................................................................................................................... 74Bind a Quote 
+.......................................................................................................................................................... 75Submit a Bind 
+.......................................................................................................................................................... 76Mark as Bound 
+===== PAGE 4 =====
+3Contents
+© 2022 Talage
+Part IVOther Capabilities 77
+................................................................................................................................... 781Appetite Check
+................................................................................................................................... 792NCCI Look Up
+................................................................................................................................... 803Required Fields
+................................................................................................................................... 824Price Indication
+.......................................................................................................................................................... 82PUT Price Indication 
+.......................................................................................................................................................... 82GET Check for Price Indication 
+===== PAGE 5 =====
+Talage Insurance API4
+© 2022 Talage
+1Overview
+Talage is the API quoting platform for commercial insurance. Our software helps you
+accelerate growth and leverage technology within the digital insurance ecosystem by: 
+Connecting all players in commercial insurance
+Delivering instant Quotes from multiple carriers
+Increasing efficiency for redundant processes
+Making digital distribution simple and easy
+Outlined below are the five primary steps of Talage's Application Submission and
+Quoting Processes. 
+You'll use the Endpoints outlined below to support the entire process from new
+Applications to binding Polices.
+===== PAGE 6 =====
+Overview5
+© 2022 Talage
+1.1First Step: Codes
+First Step: Key Codes Determine the Type of Quote
+We collect your Codes (e.g. Industry, Categories, and Activity)
+Codes determine the type of insurance and the Carriers that provide Quotes
+Codes are the foundation for the Quoting Process
+To set up your Codes Go to: Step 1: Categories and Codes Set Up
+See also: Getting Started
+===== PAGE 7 =====
+Talage Insurance API6
+© 2022 Talage
+1.2Second Step: Basic Information
+Second Step: Gather Basic Information for Application 
+Enter Client Information (e.g. name of business, contact information)
+This information is used by Carriers to determine whether they provide Quotes
+This adds to the foundation of the Quoting Process
+To set up Application Processing Go to: Step 2: Basic Info and Application Set Up
+See also: Getting Started
+===== PAGE 8 =====
+Overview7
+© 2022 Talage
+1.3Third Step: Location Information
+Third Step: Collect Location Information 
+Enter Information about each Location (e.g. address, payroll) 
+This information is used by Carriers to develop Quotes
+This information is key to providing comprehensive Quotes 
+To set up Locations Go to: Step 3: Location Set Up
+See also: Getting Started
+===== PAGE 9 =====
+Talage Insurance API8
+© 2022 Talage
+1.4Fourth Step: Questions
+Fourth Step: Respond to Questions from Carriers
+You may receive additional Questions based your selections (e.g. type of
+insurance, policies selected, locations)
+Carriers use this additional information to provide comprehensive Quotes
+To set up your Questions Go to: Step 4: Questions
+See also: Getting Started
+===== PAGE 10 =====
+Overview9
+© 2022 Talage
+1.5Fifth Step: Quote and Bind
+Fifth Step: Quote and Bind Policies 
+Carriers Provide Quotes based on the information provided
+Agents can review these Quotes with their Clients
+Agents can check the status and review Quotes
+Agents can bind Policies online* or via Carrier-specific process
+* Can bind in the API with some carriers
+To set up for Quotes Go to: Step 5: Quote and Bind Set Up
+See also: Getting Started
+===== PAGE 11 =====
+Talage Insurance API10
+© 2022 Talage
+1.6Integration Checklist
+Integration Checklist:  You'll use the Endpoints outlined below to support the
+entire process.
+ ProcessName  
+Path Description
+Authorization Log into a Session
+Get Token POST/auth Get access by creating a new Bearer
+Token
+Go to: Authentication
+Categories
+and Codes
+Define Codes to set up mapping
+framework to support the Application
+submission process
+Get Industry
+Categories
+GET/industry-
+categories
+Get a list of the Industry Categories
+Get Industry CodesGET/industry-codesGet a list of the Industry Codes
+Get Activity CodesGET/activity-codes?
+industry_code=xxxx
+&territory=XX
+Get a list of Activity Codes
+Go to: Step 1: Categories and Codes Set Up
+===== PAGE 12 =====
+Overview11
+© 2022 Talage
+Integration Checklist Continued:
+ProcessName  
+Path Description
+Applications Define Framework 
+for Applications
+Create ApplicationPOST/applicationCreate a new Application
+Get Application GET/application/
+{{appId}}
+Retrieve an existing Application
+Update ApplicationPUT/applicationUpdate an existing Application
+Validate ApplicationPUT/application/
+{{appId}}/validate
+Confirm Application is complete before
+submitting for Quotes
+Get Application ListGET/applicationView list of Applications that match search
+criteria
+Go to:Step 2: Basic Info and Application Set Up
+Additional
+Application
+Capabilities
+Appetite Check GET/application/
+{appId}/
+checkappetite
+Identifies which insurers are "in Appetite" for
+an Application
+NCCI Look Up GET/application/
+{appId}/ncci-activity-
+codes
+Returns Talage Activity Code for Payroll
+Required Fields GET/application/
+{appId}/
+getrequiredfields
+Returns list of Required Fields
+Go to: Other Capabilities
+Locations Provide information about client's
+Locations
+Add Location PUT/application/
+location
+Add a new Location to an existing Application
+Update LocationPUT/application/
+location
+Update information for an existing Location on
+an existing Application
+Delete Location PUT/application/
+location
+Remove a Location from an existing
+Application
+Go to: Step 3: Location Set Up
+===== PAGE 13 =====
+Talage Insurance API12
+© 2022 Talage
+Integration Checklist Continued:
+ Process Name  
+ Path  Description
+Questions Questions from Carriers
+Get Questions GET/application/
+{{appId}}/questions
+View Questions from Carriers. Issues are
+general about the client, or specific about
+Locations and claims history. 
+Go to: Step 4: Questions
+Quote and
+Bind 
+Quote and Bind Policies, 
+and Mark as Bound
+Start Quoting Process by submitting an
+Application. Then, receive Quotes from
+integrated carriers. Agents review the
+Quotes and Bind a Policy. 
+Start Quoting PUT/application/quoteBegin the process of obtaining Quotes from
+Carriers
+Check for QuotesGET/application/
+{{appId}}/quote
+Check for Quotes from Carriers and
+refreshes view
+Bind a Quote PUT/application/bind-
+quote
+Bind a Quote immediately with some
+Carriers
+Submit a Bind PUT/application/
+request-bind-quote
+Bind a Policy with the Carrier. Requires
+Response from Carrier
+Mark as Bound PUT/application/mark-
+quote-bound
+After you bind a Policy, mark the Quote as
+bound
+Go to:  Step 5: Quote and Bind Set Up
+Additional
+Quote and
+Bind
+Capabilities 
+Price Indication PUT/application/priceReturns Quote Check to help you decide
+whether to submit an Application for a full
+Quote
+Check for Price
+Indication
+GET/application/
+{appId}/quotes
+Check for Price Indications received
+Go to: Other Capabilities
+===== PAGE 14 =====
+Overview13
+© 2022 Talage
+To ensure a successful integration, you'll first be given access to APIs Demo
+Environment. After you complete testing, you're ready to go live in Talage's Production
+Environment.
+The steps you'll follow are outlined below.  If you need help, we are here to assist you
+throughout the entire process.  See also: Contact Talage Help
+To log in and access the Environments Go to: Getting Started
+If you're logged in and ready to begin Go to: Set Up Endpoints
+===== PAGE 15 =====
+Talage Insurance API14
+© 2022 Talage
+2Getting Started
+Login
+To begin, you'll log into your Talage Account in Demo Environment. 
+You'll start by getting a Bearer Token, which is required to make calls to the
+Talage Endpoints. To do this Go to: Authentication
+If you still need login credentials Go to: Contact Talage Help
+Environments
+You'll access two environments while completing your API Integration. 
+1. Demo is used for your testing and development: 
+Demo API: https://demoapi.talageins.com/v1/api 
+Demo Wheelhouse: https://demo.insurancewheelhouse.com/ 
+2. Production is used by Agents and the integrated Insurance Carriers to
+facilitate live submission and updating of Applications. You'll access these
+environments only after you have successfully completed testing:
+Production API: https://api.talageins.com/v1/api 
+Production Wheelhouse: https://agents.insurancewheelhouse.com/ *
+This is the portal that agents use to submit Applications
+* Your domain may be different. For example, individual agencies
+will have their own subdomain. 
+Contact Talage to get access Go to: Contact Talage Help
+To begin setting up Endpoints Go to: Set Up Endpoints
+See also: Common Elements
+===== PAGE 16 =====
+Getting Started15
+© 2022 Talage
+2.1Authentication
+You'll receive your login credentials from Talage for both Platforms:
+1. API Platform 
+2. Wheelhouse
+GET Token: You'll use the Get Token Endpoint to log into an API Session. 
+Two Required Fields: 
+Username
+Password
+Bearer Token
+In order to establish an API Session, you must pass your username and
+password.
+In the Response you'll receive a Bearer Token. This Token is labeled,
+"Bearer" followed by a randomly-generated string.
+This Bearer Token string must be passed in the 'token' field in order to
+authenticate your Requests..
+For security purposes, each Bearer Token is valid for one hour.  
+After the hour is up, you'll need to get another Bearer Token.
+Refresh Token: For your convenience, you can refresh your Token using
+the Update Application Endpoint when you save information to
+Applications. More below
+Sample Code: POST Get Token
+POST /v1/api/auth HTTP/1.1
+Host: demoapi.talageins.com/v1/api/auth
+user={{username}}&password={{password}}
+BODY (urlencoded)
+user {{username}}password {{password}}
+===== PAGE 17 =====
+Talage Insurance API16
+© 2022 Talage
+Sample Response
+Below is an excerpt of a sample Request that includes the Bearer Token:  
+{
+"status" : "Created",
+"token" " "Bearer gkxwAvgD-
+BR2MRrrXZmxIAUyIXcFhJOSYwCBaIBhzNajk71ahgQAIE81356ahgdAv hiajdqt71"
+}
+Note: The above is an example. 
+You must use the Token you received.
+Refresh Token
+Update Application is the most frequently used Endpoint so we offer an easy
+way to extend your Sessions by getting new Authentication Tokens when you use
+this Endpoint.
+See also: Update Application
+To do this, pass refreshToken: true.
+This passes a new Token as part of the Response when you save the
+Application. 
+This keeps your Session active without making an additional call to the 
+Authentication Endpoint. 
+===== PAGE 18 =====
+Getting Started17
+© 2022 Talage
+2.2Common Elements
+Outlined below are elements that are common across Talage Method calls. To avoid
+repetition, they're outlined below rather than repeating them in each section.  
+Each Method is invoked using an HTTPS Request to an API Endpoint.
+Requests are made using the http verbs:  
+POST is used to create a new resource and post new data.
+GET is used to retrieve data without changing it.
+PUT is used to modify existing resources and data. This is done by
+replacing the existing data/resource with new data/resource.
+POST and PUT Requests
+Pass Request Body in JSON format
+Content-Type Header should use application/JSON format
+GET Requests 
+Cannot take a Body
+Pass necessary information as a parameter in the URL
+Talage uses RESTful JSON API for flexibility in delivering data in multiple formats and
+supporting wide variety of the collection methods accessed through REST Endpoints. 
+API: Application Programming Interface
+REST: Representational State Transfer
+JSON: JavaScript Object Notation, an open standard format
+Request Body Header
+Authorization
+Token
+Header
+content-Type application/JSON
+===== PAGE 19 =====
+Talage Insurance API18
+© 2022 Talage
+Anatomy of a Request
+Response Codes
+Listed below are the Response Codes used by Talage API: 
+200 OK
+201 Created (will be returned when a new Token is created)
+400 Bad Request
+403 Forbidden
+404 Not Found
+500 Internal Server Error
+===== PAGE 20 =====
+Getting Started19
+© 2022 Talage
+Outcomes
+Talage API uses standard HTTP Response Codes (above) to indicate the
+success or failure of API Requests:
+Success: If the call succeeds, the Status Code is usually 200 whether a
+Response is returned or not
+Failure: If the call fails, the Status Code is 400 or greater, and the
+Response looks like the following:
+{
+  "code": error type,
+  "message": reason
+}
+Abbreviations
+WC stands for Workers' Compensation Insurance
+This type of policy covers workers who are injured or become sick due to
+work-related causes. This insurance covers medical expenses and may
+also pay a portion of workers' lost wages due to the work-related
+occurrence. 
+This policy also protects businesses from potentially catastrophic financial
+losses due to Workers' Compensation Claims. 
+BOP stands for Business Owner's Policy
+This commercial coverage is a combination of both property and liability
+insurance.
+2.3Contact Talage Help
+We're here to Help:  Talage has a team of experts, standing by to answer your
+questions. 
+Call:  (833) 4-TALAGE (833-482-5243) and we will help you out!
+Email: support@talageins.com
+===== PAGE 21 =====
+Talage Insurance API20
+© 2022 Talage
+3Set Up Endpoints
+Detailed instructions are provided below for each Endpoint that you'll test and complete
+to support the Five Steps:
+The following instructions assume you are logged in. 
+If you still need to do that Go to: Authentication
+Step 1: Set up Codes 
+GET Industry Categories
+GET Industry Codes
+GET Activities Codes
+Go to: Categories and Codes Set Up
+Step 2: Set Up Basic Information and Application processing
+POST Create Application
+GET Application
+PUT Update Application
+PUT Validate Application
+GET Application List
+Go to: Step 2: Basic Info and Application Set Up
+Step 3: Set up Location Information
+PUT Add Location
+PUT Update Location
+PUT Delete Location
+Go to: Step 3: Location Set Up
+===== PAGE 22 =====
+Set Up Endpoints21
+© 2022 Talage
+Step 4: Set up for Questions 
+GET Questions
+Go to: Step 4: Questions
+Step 5: Set up to Quote and Bind Policies
+PUT Request Quotes
+GET Check for Quotes
+PUT Request to Bind
+This is also known as "Submit to Underwriting" by some Customers.
+PUT Bind a Quote with Carrier * 
+PUT Mark as Bound
+* Note: API Binding is available with limited Carriers, not all Quotes are
+"bindable." For a list of Carriers that allow binding via API contact Talage. 
+Go to: Step 5: Quote and Bind Set Up
+Additional Capabilities
+To learn about Talage APIs beyond those outlined above 
+Go to: Other Capabilities
+===== PAGE 23 =====
+Talage Insurance API22
+© 2022 Talage
+3.1Step 1: Categories and Codes Set Up
+The Endpoints for Step 1 facilitate the usage of Talage's Industry Categories, Industry
+Codes, and Activity Codes. As a result, this step has significant impact because it
+determines how new Client Applications are classified, evaluated, and quoted. 
+Because this is so critical, Talage makes considerable investment in supporting you
+through this process and testing to support a smooth integration. 
+See also: Contact Talage Help
+===== PAGE 24 =====
+Set Up Endpoints23
+© 2022 Talage
+3.1.1Get Industry Categories
+You'll use the Get Industry Categories Endpoint to filter and display Industry Codes to
+users. 
+This filtering is done by displaying only the Industry Codes based on the Industry
+Category selected by the user.  
+Narrowing the list of Industry Codes that are displayed, helps the Agent select the
+correct Industry Code. This is critical to the quoting process. 
+To ensure a smooth quoting process, Talage will assist you in mapping your Industry
+Categories with those used by our integrated carriers. 
+See also: Contact Talage Help
+The following instructions assume you are already logged in. 
+To do that Go to: Authentication
+See also: Overview, Common Elements
+Sample Code: GET Industry Categories
+GET /v1/api/industry-categories HTTP/1.1
+Host: demoapi.talageins.com
+Sample Response
+Below is a sample Response that illustrates Industry Category with the
+description and code: 
+  {
+       "featured": true,
+       "industryCodeCategoryId": 5,
+       "name": "Attractions/Entertainment",
+       "id": 5
+   } 
+===== PAGE 25 =====
+Talage Insurance API24
+© 2022 Talage
+3.1.2Get Industry Codes
+You'll use Get Industry Codes to view the list of Industry Codes that can be used to
+identify clients' industries.
+Industry Codes include: 
+Talage's Industry Code IDs and Descriptions
+ISO (International Organization for Standardization)
+SIC (Standard Industrial Classification) 
+NAICS (North American Industry Classification System)
+The most common are listed above but there may be others. 
+To ensure a smooth quoting process, Talage will assist you in mapping your Industry
+Codes with those used by our integrated carriers. 
+The following instructions assume you are already logged in. 
+To do that Go to: Authentication
+See also: Overview, Common Elements
+Sample Code: GET Industry Codes
+GET /v1/api/industry-codes HTTP/1.1
+Host: demoapi.talageins.com
+The Response lists Industry Codes with descriptions and codes for the selected Industry
+Category: 
+Note: To ensure a smooth quoting process, Talage will assist you in mapping
+your Industry Codes with those used by our integrated Carriers. 
+ [
+   {
+        "featured": 0,
+        "alternateNames": [ ],
+        "description": "Abrasive Product Manufacturing",
+        "cgl": "50015",
+        "sic": "3291",
+        "naics": "327910",
+        "iso": null,
+        "hiscox": null,
+        "industryCodeId": 1805,
+        "industryCodeCategoryId": 10,
+        "id": 1805,
+        "isFeatured": false,
+        "category": "Manufacturing"
+    }  
+]
+===== PAGE 26 =====
+Set Up Endpoints25
+© 2022 Talage
+3.1.3Get Activity Codes
+You'll use the Get Activity Codes Endpoint to get a list of relevant Activity Codes, which
+are used to identify the type of Request being made by clients.  
+Activity Codes are determined by a combination of Industry Category Codes and
+Industry Codes.
+These codes are mapped to the relevant Talage Codes based on geographic
+Territories. 
+The following instructions assume you are already logged in. 
+To do that Go to: Authentication
+See also: Overview, Common Elements
+PARMS 
+industry_code Description: This Code is used to identify the
+codes you assign to industries. 
+Required: Yes
+Possible Values: Values are Talage Industry
+Code ID.
+territory Description: This Code conveys geographic
+location.
+Required: Yes
+Possible Values: State codes 
+(e.g. AL, AK, AZ, AR...)
+See also: Get Industry Categories, Get Industry Codes
+Below is Sample Code and an example to show usage: 
+Sample Code: GET Activity Codes
+https://demoapi.talageins.com/v1/api/activity-codes?
+industry_code=2680&territory=CA
+===== PAGE 27 =====
+Talage Insurance API26
+© 2022 Talage
+In this sample, the Industry Code is 2680 and the Territory is California (CA):
+PARMS
+industry_code 2680
+territory CA
+This combination is used to map to the relevant Talage Activity Code, which
+serves as an interface between your system and Talage's Wheelhouse. This
+interface is a key foundation to the quoting process.
+Sample Response
+The Response contains a list of items including the Description and ID for each
+Activity Code returned by the Request.  
+A list of Activity Codes are provided for each Activity Type for every Industry
+Code and Territory.
+   {
+       "alternateNames": [ ],
+       "activityCodeId": 1859,
+       "description": "Floral Farm",
+       "id": 1859,
+       "alternate_names": [ ],
+       "suggested": 0
+   }
+===== PAGE 28 =====
+Set Up Endpoints27
+© 2022 Talage
+3.2Step 2: Basic Info and Application Set Up
+Applications are submitted by Agents to Insurance Carriers to begin the Quoting
+Process for their Clients. As a result, Application Set Up is the core resource of Talage
+API. 
+There are five Application Endpoints: 
+Create Application 
+Get Application
+Update Application
+Validate Application
+Get Application List
+These Endpoints are used to support the Application Process:
+You'll use Create Application to create a new Application. The Application
+Process can be started with only minimal information. To begin, the only required
+field that must be entered is the name of the business. 
+As more information is collected, you'll use Get Application to recall the existing
+Application and Update Application to add new information and make correction
+to existing Applications. 
+After the required information is provided, you'll use Validate Application to
+confirm that all of the necessary information has been provided. This must be
+done before submitting an Application for a Quote.
+To view submitted Applications, you'll use Get Application List. You'll use
+Application Status Codes to search for Applications. 
+The Application object has several child objects:
+Policies
+Owners
+Claims
+Locations - this is the only child resource that has its own Endpoint 
+See also: Update Location
+Application Status
+Application Status reflects where an Application is in the process outlined
+above. 
+You can also use status to filter results when searching for Applications.  To do
+this, you'll use the Get Application List Endpoint.
+===== PAGE 29 =====
+Talage Insurance API28
+© 2022 Talage
+3.2.1Create Application
+This is the first step of the Applications process. The Create Application Endpoint is
+used to create a new Application for a Client.
+See also: Overview
+User tip: To update an existing Application, you'll use Get Application to retrieve
+the Application and then use Update Application to complete the Application.  
+To do that Go to: Get Application, Update Application
+The following instructions assume you are already logged in. 
+To do that Go to: Authentication
+See also: Overview, Common Elements
+When you create a new Application, it's recommended that you pass as much
+information as you have at that time. 
+Required Fields
+There are two required fields that must be provided at a minimum when creating
+a new Application: 
+agencyId
+businessName
+Below is Sample Code and Sample Response to show usage: 
+Sample Code: POST Application
+https://demoapi.talageins.com/v1/api/application
+Sample Request           {
+ "industryCode":2668,
+ "agencyId":1,
+ "businessName":"Test Company”,
+",
+   "dba":"",
+   "contacts":[
+      {
+         "primary":true,
+         "firstName":"Adam",
+         "lastName"Kiefer"",
+         "email":"adam@talageins.com",
+         "phone":“(510) 894-0442”"
+         "optedOutOnline":null
+      }
+   ],
+===== PAGE 30 =====
+Set Up Endpoints29
+© 2022 Talage
+   "phone":"(833-482-5243)",
+   "mailingAddress":"200 S. Virginia Street", 
+   "mailingAddress2":"",
+   "mailingCity":"Reno",
+   "mailingState":"NV",
+   "mailingZipcode":"89501",
+   "entityType":"Corporation",
+   "website":"",
+   "founded":"2010-04-01T12:00:00.000Z",
+   "ein":"123456789",
+   "managementStructure":"",
+   "corporationType":"C"
+}
+Sample Response
+A full Response returns the complete Application object with an applicationId. 
+Below is an excerpt of a sample Response: 
+{
+"applicationId": "b25eef46-bc9d-460d-9f9b-1b7cb3228638"   
+"agencyLocationId": 1,
+"lockAgencyLocationId": false,
+"appStatusId": 0,
+"apiCreated": true,
+ ...  
+}
+===== PAGE 31 =====
+Talage Insurance API30
+© 2022 Talage
+3.2.2Get Application
+To update an existing Application, you'll use two Endpoints: 
+Get Application is used to retrieve an existing Application.  
+You'll use this to find Applications that were started and need to be
+completed.  
+Required Field: To find an Application, you must have its ApplicationId.
+To do this Go to:  Get Application List
+Update Application is used to append data to existing Applications
+The following instructions assume you are already logged in. 
+To do that Go to: Authentication
+See also: Overview, Common Elements
+PARMS
+applicationIdDescription: The unique identifier
+assigned to each Application.  
+Required: Yes
+Possible Values: This identifier is
+automatically generated when an
+Application is created. 
+Below is Sample Code and a Sample Response to show usage: 
+Sample Code: GET Application 
+https://demoapi.talageins.com/v1/api/application/{applicationId}
+Sample Response
+A full Response returns the complete application object with an applicationId.
+Below is an excerpt of a sample Response: 
+{
+   "applicationId": "2ccd34a9-3708-4d71-bcff-a969398d914e",
+   "agencyLocationId": 1,
+   "lockAgencyLocationId": false,
+   "appStatusId": 60,
+     ....
+}
+Next step: After you find the Application you're looking for Go to: Update Application
+===== PAGE 32 =====
+Set Up Endpoints31
+© 2022 Talage
+3.2.3Update Application
+To update an existing Application, you'll use Update Application to append and replace
+data to an existing Application and save those updates. 
+The following instructions assume you are already logged in. 
+To do that Go to: Authentication
+See also: Overview, Common Elements
+After an Application has been quoted, the Application can no longer be updated.
+Applications with a Status Code of 40 or greater can no longer be updated.
+If an Application is validated and submitted but no Quotes were received, you can
+update that Application and resubmit it.
+Required Fields
+You must pass the applicationId. 
+To find an applicationId Go to: Get Application List
+In addition, the fields that you want to update will need to be passed in the
+Request Body.
+The rest of the data in the Application will remain unchanged.  
+Refresh Token Automatically
+Update Application is the most frequently used Endpoint so we offer an easy
+way to extend your Sessions by getting new Authentication Tokens when you use
+this Endpoint.  
+To do this, pass refreshToken: true as part of the Request Body: 
+{
+refreshToken: true
+}
+This returns a Token in the Response that extends your Session an additional
+hour.
+===== PAGE 33 =====
+Talage Insurance API32
+© 2022 Talage
+Two type of updates
+1. Adding:  You can update existing Applications by appending new information
+and correcting information. 
+2. Replacing: You can also make corrections by fully replacing data. 
+For example, for child objects (such as arrays) given in the Request Body,
+the previous object will be replaced entirely. For example, you can't add,
+edit or delete a single item in the policies array. To update the type of
+policy from PL to WC, you must pass the new policy array in 'policies.' 
+This will replace the original array (i.e. PL) with the updated array (i.e.
+WC) that you're passing.  
+"policyType": "PL"
+"policyType": "WC"
+Below is Sample Code and a Sample Response to show usage: 
+Sample Code: PUT Application
+https://demoapi.talageins.com/v1/api/application/
+Sample Request        {
+  "applicationId": "2ccd34a9-3708-4d71-bcff-a969398d914e",
+    "businessName": "Test Company",
+    "agencyId": 1,
+    "agencyLocationId": 1,
+    "contacts": {
+        "email": "adam@talageins.com",
+        "firstName": "Adam",
+        "lastName": "Kiefer",
+        "phone": "(888) 123-4567",
+        "primary": true
+    },
+    "industryCode": 1467,
+    "dba": "",
+    "policies": [
+        {
+            "policyType": "WC",
+            "effectiveDate": "2021-09-01T08:00:00.000Z",
+            "deductible": 2500,
+            "limits": "100000010000001000000"
+        }
+    ]
+}'
+===== PAGE 34 =====
+Set Up Endpoints33
+© 2022 Talage
+Sample Response
+A full Response returns the complete Application object with an applicationId.
+Below is an excerpt of a sample Response: 
+{
+   "applicationId": "2ccd34a9-3708-4d71-bcff-a969398d914e",
+   "agencyLocationId": 1,
+   "lockAgencyLocationId": false,
+   "appStatusId": 0,
+   "lastStep": 0,
+   "progress": "unknown",
+   "status": "incomplete",
+   "apiCreated": true,
+ ...
+}
+Application Fields that can't be changed:
+id progress
+mysqlId status
+applicationId referrer
+uuid einEncrypted
+agencyNetworkId einEncryptedT2
+agencyId einHash
+agencyLocationId businessDataJSON
+abandonedEmail agencyPortalCreatedUser
+abandonedAppEmail agencyPortalModifiedUser
+optedOutOnlineEmailsent quotingStartedDate
+optedOutOnline metrics
+stoppedAfterPricingEmailSent handledByTalage
+stoppedAfterPricing copiedFromAppId
+processStateOld renewal
+solepro pricingInfo
+wholesale
+===== PAGE 35 =====
+Talage Insurance API34
+© 2022 Talage
+User tip:  Although the above fields can't be changed, you can use them in APIs
+to support your business. 
+Below is an example using 'metrics' that Talage auto-calculates for
+Application value in its backend during Quoting:
+ {
+"appValue": 1085,
+"_id": "62a95b0b97388460d3389e00",
+"lowestBoundQuoteAmount": {
+"_id": "62a95b0b97388460d3389e01",
+"WC": 600
+},
+"lowestQuoteAmount": {
+"_id": "62a95b0b97388460d3389e02",
+"WC": 500,
+"BOP": 485
+}
+}
+As a result, the Application Value is $1085 = 
+$600 Bound WC Quote + 
+$485 Quoted BOP but not yet Bound
+In addition, you can see that the lowest WC Quote (i.e. $500) was not the
+one that was Bound.
+Next step: After you complete an Application Go to: Validate Application
+===== PAGE 36 =====
+Set Up Endpoints35
+© 2022 Talage
+3.2.4Validate Application
+You can use Validate Application to verify that the Application is complete before
+submitting it for Quotes. 
+Although this step is optional, it's recommended you complete this step to avoid
+errors during the Quoting Process. 
+Note: This validation confirms completion. It doesn't validate the accuracy or
+integrity of the information in the Application. 
+The following instructions assume you are already logged in. 
+To do that Go to: Authentication
+See also: Overview, Common Elements
+Required Fields:  You must pass the applicationId and include passedValidation: true
+as part of the Request Body:
+{
+passedValidation: true
+} 
+To find an applicationId Go to: Get Application List
+Below is Sample Code and a Sample Response to show usage: 
+Sample Code: PUT Application Validate
+https://demoapi.talageins.com/v1/api/application/{appId}/validate
+Sample Request
+{
+  "applicationId": "2ccd34a9-3708-4d71-bcff-a969398d914e",
+}
+===== PAGE 37 =====
+Talage Insurance API36
+© 2022 Talage
+Sample Response
+A full Response returns the Application object with the URL for the validated
+Application. 
+The Response contains a boolean value for passedValidation:
+If false, a string labeled, "validationError" will display a message, stating
+what's missing from the Application. 
+{
+"passedValidation": false
+"validationError": "Error validating application d1378d01-9e84-41c5-a7ad-
+63fd81a6465e: Failed validating locations: Error: At least 1 location must be
+provided"
+}
+If true, the Application passed validation. As a result, the Application
+doesn't have any errors. 
+{
+"passedValidation": true
+}
+===== PAGE 38 =====
+Set Up Endpoints37
+© 2022 Talage
+3.2.5Get Application List
+You'll use Get Application List to display all Applications that belong to the Agency that's
+submitting the search.
+Below are some examples: 
+New Applications
+Applications in process 
+Applications that have received Quotes from Carriers
+Applications that have been bound
+You have the option to filter these search results using query parameters. These
+parameters are outlined below. 
+The following instructions assume you are already logged in. 
+To do that Go to: Authentication
+See also: Overview, Common Elements
+Required Field: There are no required fields to display Applications. 
+Search Parameters outlined below can be used to filter and sort search results:
+Filtering: All top-level string fields that are in the Application JSON Object can
+be used to filter search results. 
+Note: The numerical fields return exact matches only. For example, when
+applicationId is entered only that Application will be displayed. 
+Commonly used filters are explained in the list of optional query
+parameters below.
+Sorting: Any top-level field in the Application JSON Object can used to sort
+search results. 
+Sort results are displayed in ascending order by default. However, the
+order can be reversed to display results in descending order.  
+Example: Path: 
+Basic Sort /application?sort=updatedAt
+Descending /application?sort=updatedAt&desc=1
+With Paging /application?limit=10&sort=updatedAt&desc=1
+===== PAGE 39 =====
+Talage Insurance API38
+© 2022 Talage
+PARAMS: The following query parameters are optional. 
+Parameter
+ Description
+limit This is the maximum number of Applications that are
+returned by the search. 
+The lower the limit, the faster the response
+The hard maximum limit is 500
+Default = 25
+page You'll use 'page' in combination with 'limit' (above) to
+control how results are displayed. 
+Default sets page = 1. This starts results on the first
+page. 
+count When 'count = 0' this returns a list of Applications that
+match the search criteria. 
+When 'count = 1' this returns the number of
+Applications that match the search criteria. 
+searchbegindateThis returns Applications that were created on or after
+the date entered in search criteria. It must be in valid
+ISO date format. For example, 2021-09-
+02T00:00:00.000Z
+searchenddate This returns Applications that were created on or
+before the date entered in search criteria. It must be
+in valid ISO date format. For example, 2021-09-
+02T23:59:00.000Z
+appStatusId This returns Applications with a status code that
+exactly matches the status entered by user.  
+For example, appStatusId=60 returns quoted
+application.  
+ltAppStatusId This returns Applications with status code that are
+less than the status code entered in the search
+criteria. 
+gtAppStatusId This returns Applications with status Codes that are
+greater than the status code entered in the search
+criteria.  
+===== PAGE 40 =====
+Set Up Endpoints39
+© 2022 Talage
+Below is Sample Code and a Sample Response to show usage: 
+Sample Code: GET Application List
+https://demoapi.talageins.com/v1/api/application?limit=25&page=1
+Sample Response to display the number of Applications that match search
+criteria
+As an alternative, you can display a count instead of a list of Applications by
+using the `count` parameter:
+{
+    "count": 2309
+}
+===== PAGE 41 =====
+Talage Insurance API40
+© 2022 Talage
+3.3Step 3: Location Set Up
+You'll use Update Location Endpoint to pass updates about the Client's Primary
+Location as well as adding and updating other physical Locations such as restaurants,
+barber shops, offices, salons, stores. You'll also use this Endpoint to add new Locations
+and delete existing Locations. In addition, you can update Location-specific information
+such as address and payroll as well as policy-specific information. 
+By default, the first Location the user enters is designated as the Primary Location.  This
+designation can be changed by using the Update Location Endpoint. 
+Below are links to the relevant section for maintaining Locations:   
+The following instructions assume you are already logged in. 
+To do that Go to: Authentication
+See also: Overview, Common Elements
+Add New Location
+To add a new Location to an existing Application Go to: Add Location
+Update Existing Location
+To add and correct information for existing Locations Go to: Update
+Locations
+Delete Location
+To delete a Location Go to: Delete Location
+===== PAGE 42 =====
+Set Up Endpoints41
+© 2022 Talage
+3.3.1Add Location
+You'll use the Update Location Endpoint to add new Locations. When adding a new
+Location to an Application, you can pass the Location object without locationId. After a
+Location is created, the complete Location object and its locationId will be returned.
+The following instructions assume you are already logged in. 
+To do that Go to: Authentication
+See also: Overview, Common Elements
+Required Field: To add a new Location, you must have the relevant
+applicationId.
+For help finding this identifier Go to: Get Application List
+Below is Sample Code and a Sample Response to show usage for WC and BOP.
+Sample Code: PUT Application Location
+https://demoapi.talageins.com/v1/api/application/location
+Sample Request for WC
+     {
+    "applicationId": "",
+    "location": {
+        "billing": true,
+        "activityPayrollList": [
+            {
+                "employeeTypeList": [
+                    {
+                        "employeeType": "Full Time",
+                        "employeeTypePayroll": 100000,
+                        "employeeTypeCount": 3
+                    }
+                ],
+                "activityCode": 1861,
+                "payroll": 100000,
+    "description": "Landscaping"
+             },
+            {
+                "employeeTypeList": [
+                    {
+                        "employeeType": "Full Time",
+                        "employeeTypePayroll": 200000,
+                        "employeeTypeCount": 3
+                    }
+                ],
+                "activityCode": 2869,
+                "payroll": 200000,
+===== PAGE 43 =====
+Talage Insurance API42
+© 2022 Talage
+                "description": "Office Employees"
+            }
+        ],
+        "questions": [],
+        "own": false,
+        "constructionType": "",
+        "numStories": null,
+        "yearBuilt": null,
+        "businessPersonalPropertyLimit": null,
+        "buildingLimit": null,
+        "address": "600 Main Street",
+        "address2": "",
+        "city": "Boston",
+        "zipcode": "02135",
+        "state": "MA",
+        "full_time_employees": 3,
+        "part_time_employees": 0,
+        "square_footage": null,
+        "unemployment_num": null
+    }
+  }
+Sample Request for BOP
+   {
+   "applicationId": "",
+    "location": {
+        "billing": true,
+        "activityPayrollList": [
+            {
+                "employeeTypeList": [
+                    {
+                        "employeeType": "Full Time",
+                        "employeeTypePayroll": 100000,
+                        "employeeTypeCount": 3
+                    }
+                ],
+                "activityCode": 2889,
+                "payroll": 100000,
+            },
+            {
+                "employeeTypeList": [
+                    {
+                        "employeeType": "Full Time",
+                        "employeeTypePayroll": 200000,
+                        "employeeTypeCount": 3
+                    }
+                ],
+                "activityCode": 2869,
+                "payroll": 100000,
+                "description": "Office Employees"
+            }
+===== PAGE 44 =====
+Set Up Endpoints43
+© 2022 Talage
+        ],
+        "questions": [],
+        "own": false,
+        "constructionType": "Fire Resistive",
+        "numStories": 3,
+        "yearBuilt": 1997,
+        "businessPersonalPropertyLimit": 33000,
+        "buildingLimit": 12000,
+        "address": "600 Main Street",
+        "address2": "",
+        "city": "Boston",
+        "zipcode": "02135",
+        "state": "MA",
+        "full_time_employees": 3,
+        "part_time_employees": 0,
+        "square_footage": 5000,
+        "unemployment_num": null
+    }
+}
+Sample Response for WC
+[
+  {
+    "billing": true,
+    "primary": true,
+    "activityPayrollList": [
+      {
+        "employeeTypeList": [
+          {
+            "_id": "60ea1081f654ce5fb0e323ed",
+            "employeeType": "Full Time",
+            "employeeTypePayroll": 100000,
+            "employeeTypeCount": 2
+          }
+        ],
+        "_id": "60ea1081f654ce5fb0e323ec",
+        "payroll": 100000
+      },
+      {
+        "employeeTypeList": [
+          {
+            "_id": "60ea1081f654ce5fb0e323ef",
+            "employeeType": "Full Time",
+            "employeeTypePayroll": 200000,
+            "employeeTypeCount": 3
+          }
+        ],
+        "_id": "60ea1081f654ce5fb0e323ee",
+        "payroll": 200000
+      }
+    ],
+    "questions": [],
+===== PAGE 45 =====
+Talage Insurance API44
+© 2022 Talage
+    "_id": "60ea1081f654ce5fb0e323eb",
+    "own": false,
+    "constructionType": "",
+    "numStories": null,
+    "yearBuilt": null,
+    "businessPersonalPropertyLimit": null,
+    "buildingLimit": null,
+    "address": "456 High Street",
+    "address2": "",
+    "city": "Austin",
+    "zipcode": "22222",
+    "state": "TX",
+    "full_time_employees": 5,
+    "part_time_employees": 0,
+    "square_footage": 123,
+    "unemployment_num": null,
+    "locationId": "60ea1081f654ce5fb0e323eb",
+    "territory": "TX",
+    "id": "60ea1081f654ce5fb0e323eb"
+  }
+]
+Sample Response for BOP
+ [
+{
+    "applicationId": "",
+    "location": {
+        "billing": true,
+        "activityPayrollList": [
+            {
+                "employeeTypeList": [
+                    {
+                        "employeeType": "Full Time",
+                        "employeeTypePayroll": 100000,
+                        "employeeTypeCount": 3
+                    }
+                ],
+                "activityCode": 2889,
+                "payroll": 100000,
+            },
+            {
+                "employeeTypeList": [
+                    {
+                        "employeeType": "Full Time",
+                        "employeeTypePayroll": 200000,
+                        "employeeTypeCount": 3
+                    }
+                ],
+                "activityCode": 2869,
+                "payroll": 100000,
+                "description": "Office Employees"
+===== PAGE 46 =====
+Set Up Endpoints45
+© 2022 Talage
+            }
+        ],
+        "questions": [],
+        "own": false,
+        "constructionType": "Fire Resistive",
+        "numStories": 3,
+        "yearBuilt": 1997,
+        "businessPersonalPropertyLimit": 33000,
+        "buildingLimit": 12000,
+        "address": "600 Main Street",
+        "address2": "",
+        "city": "Boston",
+        "zipcode": "02135",
+        "state": "MA",
+        "full_time_employees": 3,
+        "part_time_employees": 0,
+        "square_footage": 5000,
+        "unemployment_num": null
+    }
+]
+For help with Questions Set Up on the Application Go to: Step 4: Questions
+===== PAGE 47 =====
+Talage Insurance API46
+© 2022 Talage
+3.3.2Update Location
+You'll use the Update Location Endpoint to add and correct information about Client's
+Locations such as physical address, number of employees, payroll information and
+other policy-specific information such as claims and accidents.
+In addition to these identifiers, you'll also pass the properties that you want
+updated for that Location. 
+Properties that are not passed will remain unchanged. 
+When you update Location information containing a child JSON object or an
+array (e.g. activityPayrollList), that child object or array will be replaced in its
+entirety.
+Required Field: In order to update a Location, you must have the relevant applicationId
+and the locationId. 
+For help finding these identifiers Go to: Get Application List
+PARMS
+applicationId   
+ Description: This is a unique identifier for an Application.
+Required: Yes
+locationId . Description: This is the unique identifier of a Location
+Required: 
+Yes: when updating Location
+No: when adding new Location
+Below is Sample Code and a Sample Response to show usage for WC and BOP.
+Sample Code: PUT Application Location
+https://demoapi.talageins.com/v1/api/application/location
+Sample Request
+{
+ "applicationId": "",
+  "location": {
+    "locationId": "{{locationId}}",
+    "address": "200 Main Street",
+    "city": "Boston",
+    "state": "MA",
+    "zipcode": "02135"
+   }
+}
+===== PAGE 48 =====
+Set Up Endpoints47
+© 2022 Talage
+Sample Response - BOP
+A full Response returns the complete application object with the locationId. 
+Below is an excerpt of a sample Response. Fields not related to BOP were
+removed: 
+[
+  {
+    "billing": true,
+    "primary": true,
+    "activityPayrollList": [
+      {
+        "employeeTypeList": [
+          {
+            "_id": "60ea1081f654ce5fb0e323ed",
+            "employeeType": "Full Time",
+            "employeeTypePayroll": 100000,
+            "employeeTypeCount": 2
+          }
+        ],
+        "_id": "60ea1081f654ce5fb0e323ec",
+        "payroll": 100000
+      },
+      {
+        "employeeTypeList": [
+          {
+            "_id": "60ea1081f654ce5fb0e323ef",
+            "employeeType": "Full Time",
+            "employeeTypePayroll": 200000,
+            "employeeTypeCount": 3
+          }
+        ],
+        "_id": "60ea1081f654ce5fb0e323ee",
+        "payroll": 200000
+      }
+    ],
+    "questions": [],
+    "_id": "60ea1081f654ce5fb0e323eb",
+      "full_time_employees": 5,
+    "part_time_employees": 0,
+     "id": "60ea1081f654ce5fb0e323eb"
+  }
+ ],        
+           "address": "200 Main Street",
+           "address2": "",
+           "city": "Boston",
+           "state": "MA",
+           "zipcode": "02135",
+           "unemployment_num": null,
+           "buildingLimit": 1000,
+           "businessPersonalPropertyLimit": 1000,
+===== PAGE 49 =====
+Talage Insurance API48
+© 2022 Talage
+           "square_footage": 3000,
+           "own": false,
+           "numStories": 4,
+           "constructionType": "Fire Resistive",
+           "yearBuilt": 1994,
+           "bop": { 
+               "sprinklerEquipped": false,
+               "fireAlarmType": "Police/Fire Connected",
+               "roofingImprovementYear": 1994,
+               "wiringImprovementYear": 1994,
+               "heatingImprovementYear": 1994,
+               "plumbingImprovementYear": 1994
+           },
+           "locationId": "6287b8735e8bcc2ecdd59eec",
+           "territory": "MA",
+       }
+Sample Response - WC
+A full Response returns the complete application object with the locationId. 
+Below is an excerpt of a sample Response that passes Properties to two
+Locations. Fields not related to WC were removed:  
+[
+  {
+    "billing": true,
+    "primary": true,
+    "activityPayrollList": [
+      {
+        "employeeTypeList": [
+          {
+            "_id": "60ea1081f654ce5fb0e323ed",
+            "employeeType": "Full Time",
+            "employeeTypePayroll": 100000,
+            "employeeTypeCount": 2
+          }
+        ],
+        "_id": "60ea1081f654ce5fb0e323ec",
+        "payroll": 100000
+      },
+      {
+        "employeeTypeList": [
+          {
+            "_id": "60ea1081f654ce5fb0e323ef",
+            "employeeType": "Full Time",
+            "employeeTypePayroll": 200000,
+            "employeeTypeCount": 3
+          }
+        ],
+        "_id": "60ea1081f654ce5fb0e323ee",
+===== PAGE 50 =====
+Set Up Endpoints49
+© 2022 Talage
+        "payroll": 200000
+      }
+    ],
+    "questions": [],
+    "_id": "60ea1081f654ce5fb0e323eb",
+    "own": false,
+    "constructionType": "",
+    "numStories": null,
+    "yearBuilt": null,
+    "businessPersonalPropertyLimit": null,
+    "buildingLimit": null,
+    "address": "200 Main Street",
+    "address2": "",
+    "city": "Boston",
+    "zipcode": "02135",
+    "state": "MA",
+    "full_time_employees": 5,
+    "part_time_employees": 0,
+    "square_footage": 123,
+    "unemployment_num": null,
+    "locationId": "60ea1081f654ce5fb0e323eb",
+    "territory": "MA",
+    "id": "60ea1081f654ce5fb0e323eb"
+  }
+===== PAGE 51 =====
+Talage Insurance API50
+© 2022 Talage
+3.3.3Delete Location
+You can delete one Location from an Application per Request. To delete more than one
+Location, you must pass the Requests separately.  
+Required Field: In order to delete a Location, you must pass the applicationId and
+locationId.
+For help finding these identifiers Go to: Get Application List
+You'll pass locationId and req.body.delete: true to delete that Location from an
+Application. 
+req.body.delete true
+Below is Sample Code and a Sample Response to show usage for WC and BOP.
+Sample Code: PUT Application Location
+https://demoapi.talageins.com/v1/api/application/location
+Sample Request for WC
+ {  
+   "applicationId": "",
+    "location": {
+        "billing": true,
+        "activityPayrollList": [
+            {
+                "employeeTypeList": [
+                    {
+                        "employeeType": "Full Time",
+                        "employeeTypePayroll": 100000,
+                        "employeeTypeCount": 3
+                    }
+                ],
+                "activityCode": 2889,
+                "payroll": 100000,
+            },
+            {
+                "employeeTypeList": [
+                    {
+                        "employeeType": "Full Time",
+                        "employeeTypePayroll": 200000,
+                        "employeeTypeCount": 3
+                    }
+                ],
+                "activityCode": 2869,
+                "payroll": 100000,
+                "description": "Office Employees"
+            }
+===== PAGE 52 =====
+Set Up Endpoints51
+© 2022 Talage
+        ],
+        "questions": [],
+        "own": false,
+        "constructionType": "",
+        "numStories": null,
+        "yearBuilt": null,
+        "businessPersonalPropertyLimit": null,
+        "buildingLimit": null,
+        "address": "600 Main Street",
+        "address2": "",
+        "city": "Boston",
+        "zipcode": "02135",
+        "state": "MA",
+        "full_time_employees": 3,
+        "part_time_employees": 0,
+        "square_footage": null,
+        "unemployment_num": null
+    }
+}
+Sample Request for BOP
+ {
+  {
+   "applicationId": "",
+    "location": {
+        "billing": true,
+        "activityPayrollList": [
+            {
+                "employeeTypeList": [
+                    {
+                        "employeeType": "Full Time",
+                        "employeeTypePayroll": 100000,
+                        "employeeTypeCount": 3
+                    }
+                ],
+                "activityCode": 2889,
+                "payroll": 100000,
+            },
+            {
+                "employeeTypeList": [
+                    {
+                        "employeeType": "Full Time",
+                        "employeeTypePayroll": 200000,
+                        "employeeTypeCount": 3
+                    }
+                ],
+                "activityCode": 2869,
+                "payroll": 100000,
+                "description": "Office Employees"
+            }
+        ],
+        "questions": [],
+===== PAGE 53 =====
+Talage Insurance API52
+© 2022 Talage
+        "own": false,
+        "constructionType": "Fire Resistive",
+        "numStories": 3,
+        "yearBuilt": 1997,
+        "businessPersonalPropertyLimit": 33000,
+        "buildingLimit": 12000,
+        "address": "600 Main Street",
+        "address2": "",
+        "city": "Boston",
+        "zipcode": "02135",
+        "state": "MA",
+        "full_time_employees": 3,
+        "part_time_employees": 0,
+        "square_footage": 5000,
+        "unemployment_num": null
+    }
+}
+Sample Response for WC and BOP
+{
+  "applicationId": "c11e8888-c878-459b-a939-f7ae13cf6708",
+  "delete": true,
+  "location": {
+    "locationId": "{{locationId}}"
+  }
+}
+===== PAGE 54 =====
+Set Up Endpoints53
+© 2022 Talage
+3.4Step 4: Questions
+Carriers send a set of Questions that need to be resolved in order to complete the
+Application process. Quotes won't be provided until the Application contains
+satisfactory Answers to these Questions.  
+There are five types of Questions that are used to support this process. You can create
+Parent-Child Relationships among Questions to define a logical hierarch of Questions. 
+Questions that have been previously answered are saved to the Application. When you
+submit new Answers, they are added to the Application. 
+Questions are classified by Subject Area, which identify the section of the Application
+the Question relates to.  The 'General' Subject Area is further categorized and sorted.
+See also: Get Questions, Question Types, Saved Questions
+Subject Areas
+Subject Area
+ Label
+ Description
+General general All Policy Types: These are Questions
+regarding the Client's overall business.
+The Questions relate to the Client's
+industry and the insurance products
+selected.
+See Categories below. 
+By default, only general Questions are
+returned unless specified in the 
+subjectArea. Request Parameter. 
+Location location BOP Only*: These Questions are
+Location-specific. 
+If the Client has more than one Location,
+there will be a set of Questions specific to
+each Location that must be answered.
+Claim claim BOP Only*: These Questions are
+regarding a particular insurance claim.
+These Questions are only needed if the
+Client has had one or more insurance
+claims within a specified timeframe.
+* These two Subject Areas are currently BOP only but this is subject to change.
+===== PAGE 55 =====
+Talage Insurance API54
+© 2022 Talage
+Categories
+Questions that are assigned to the General 'Subject Area' are organized by
+Category. These Categories are used to sort Questions when they're returned. In
+addition, they're assigned a ranking which determines the order that Questions
+are returned by Category.  
+Note: Categories and this sorting process are defined and maintained by
+Talage. For consistency, these Categories are standardized so therefore
+can't be customized.
+Category
+ Exact Formatting
+ categorySortNumber
+Business Buinsess 1
+Employee employee 2
+Work Conditions WorkConditions 3
+Operations Operations 4
+CompanyPractices 5
+Drivers Drivers 6
+Services 7
+Alcohol alcohol 8
+InsurancePolicy InsurancePolicy 9
+Uncategorized uncategorized 99
+Hierarchy of Questions: You can create a logical hierarchy of Questions by defining
+Parent-Child relationships to determine the order and conditions for Questions. 
+To do that Go to:  Parent-Child Hierarchy
+===== PAGE 56 =====
+Set Up Endpoints55
+© 2022 Talage
+3.4.1Get Questions
+You'll use the Get Questions Endpoint to get a set of Questions that need to be
+resolved in order to complete the Application process. These Questions are tailored to
+the Client’s business. There may also be Questions specific to Client Locations. Quotes
+won't be provided until the Application contains satisfactory Answers to these
+Questions.
+You'll pass Answers to these Questions using the Update Application Endpoint.
+To do that Go to: Update Application
+The following instructions assume you are already logged in. 
+To do that Go to: Authentication
+See also: Overview, Common Elements
+Required Fields: Several properties are used to select the relevant Questions for
+Applications. As a result, an Application must contain the following in order to retrieve
+the relevant Questions: 
+Industry Code
+At least one Location
+At least one Policy Type
+PARMS
+questionSubjectArea
+ Description: This is the relevant section of the 
+Application that the Question is related to. 
+Required: general
+Optional: location, claim
+Below is Sample Code and a Sample Response to show usage:
+Sample Code: GET Application Questions
+https://demoapi.talageins.com/v1/api/application/{appId}/questions
+===== PAGE 57 =====
+Talage Insurance API56
+© 2022 Talage
+Sample Responses for each type of Question:
+ 
+Yes/No 
+ Go to:  Yes/No Question Sample Response
+Checkbox Go to:  Checkbox Question Sample Response
+Select List Go to:  Select List Question Sample Response
+Single-line Text Go to:  Single-line Text Question Sample Response
+Multiple-line Text Go to:  Multiple-line Text Question Sample Response
+Sample Response for Incomplete Application
+When an incomplete Application is submitted, the following response is
+returned: 
+{
+  "code": "BadRequest",
+  "message": "An error occurred while retrieving application questions. Error: Incomplete
+Application: Application Policy Types"
+}
+3.4.2Saved Questions
+When Questions are received from Carriers, you'll use the Update Application
+Endpoint to save Answers to the Application. You can save Answers individually or in
+bulk.
+See also: Update Application
+Questions are saved by adding to the Application that the user sends. 
+Previously Answered Questions are stored in the answeredList array.
+Questions that have not yet been answered are stored in the questionList array.
+===== PAGE 58 =====
+Set Up Endpoints57
+© 2022 Talage
+3.4.3Parent-Child Hierarchy
+You can create a logical hierarchy of Questions by defining Parent-Child relationships
+among Questions  This allows you to present relevant Questions based on conditions. 
+A Child Question is dependent upon the Answer of a Parent Question. All types of
+Questions can have Parent-Child Relationships. 'Yes/No' Questions and Single-line and
+Multiple-line Text Questions are the most common types of Questions that have Parent-
+Child Relationships.
+Below is an example of a Yes/No Question with Parent-Child Relationship: 
+Parent Question: "Do you have any subsidiaries or are you a subsidiary of
+another entity?" 
+The Child Question, "Please provide details regarding the subsidiary
+relationship" is triggered when the user Answers 'Yes' to the Parent Question
+(above). 
+A Child Question can be identified by the following properties:
+Parent Question is identified the parent question by id
+parent_answer which identifies for which parent answer the child question is
+relevant and should be asked
+Sample Parent Question 
+{
+    "typeId": 1,
+    "talageQuestionId": 2000,
+    "text": "Do any employees predominantly work at home under normal circumstances?",
+    "typeDesc": "Yes/No",
+    "answers": [
+        {
+            "default": true,
+            "answerId": 5028,
+            "answer": "No",
+            "id": 5028,
+            "question": 2000
+        },
+        {
+            "answerId": 5029,
+            "answer": "Yes",
+            "id": 5029,
+            "question": 2000
+        }
+    ],
+    "categoryName": "employee",
+    "categorySortNumber": 2,
+===== PAGE 59 =====
+Talage Insurance API58
+© 2022 Talage
+    "sortRanking": 10,
+    "id": 200,
+    "type": "Yes/No"
+},
+Sample Child Question
+{
+    "typeId": 5,
+    "talageQuestionId": 2001,
+    "parent": 2000,
+    "parent_answer": 5029,
+    "sub_level": 1,
+    "text": "What percentage of employees work from home under normal circumstances?",
+    "typeDesc": "Text - Single Line",
+    "answers": [],
+    "categoryName": "employee",
+    "categorySortNumber": 2,
+    "sortRanking": 10,
+    "inputType": "number",
+    "maxLength": 500,
+    "maxValue": 100,
+    "minValue": 0,
+    "id": 2001,
+    "type": "Text - Single Line"
+},
+===== PAGE 60 =====
+Set Up Endpoints59
+© 2022 Talage
+3.4.4Question Types
+Below is a summary of the types and relationships related to Questions that you'll be
+working with as well as the Subject Areas and Categories, which are used for sorting
+Responses. To save Responses to Questions, you'll use the Update Application
+Endpoint. To do that Go to: Update Application, Saved Questions
+Types of Questions 
+After you pass the Get Questions Endpoint you'll receive a set of Questions called
+questionList. Each Question is defined by a JSON object. Below are the types of
+Questions that will be returned, including codes, descriptions, and sample Question:
+Question Type
+ typeId
+ Description and Example Question
+Yes/No 1 Question that allows a Response of either 'Yes'
+or 'No.' One of these is set as default
+Example: "Do any employees predominantly
+work at home?"
+Go to: Yes/No Question Sample Response
+Checkbox 2 Question that displays a list of potential
+Answers. Users are permitted to select one or
+more Answers. 
+Example: "Car wash operations are: (check all
+that apply)"
+Go to: Checkbox Question Sample Response
+Select List 3 This displays a list of Answers. The user can
+pick only one Answer. 
+Example: "How long have you had continuous
+coverage?"
+Go to: Select List Question Sample Response
+Text in
+Multiple Lines
+4 The written Answer is allowed more than one
+line. This type of Question most often occurs as
+the child of a parent-child relationship
+Example: "Please provide details regarding
+other business interests or activities that are not
+insured:"
+Go to: Multiple-line Text Question Sample
+===== PAGE 61 =====
+Talage Insurance API60
+© 2022 Talage
+Response
+Text in 
+Single Line
+5 The written Answer fits on one line. This type of
+Question most often occurs as the child of a
+parent-child relationship.
+Example: "Please provide details regarding the
+subsidiary relationship."
+Go to: Single-line Text Question Sample
+Response
+===== PAGE 62 =====
+Set Up Endpoints61
+© 2022 Talage
+3.4.4.1Yes/No Question Sample Response
+[
+  {
+    "answerId": 2555,
+    "answer": "No",
+    "id": 2555,
+    "question": 1000
+  },
+  {
+    "answerId": 2556,
+    "answer": "Yes",
+    "id": 2556,
+    "question": 1000
+  }
+]
+===== PAGE 63 =====
+Talage Insurance API62
+© 2022 Talage
+3.4.4.2Checkbox Question Sample Response
+{
+  "id": 303,
+  "text": "Car wash operations are: (check all that apply)",
+  "type": "Checkboxes",
+  "answers": [
+    {
+      "id": 596,
+      "answer": "Automatic"
+    },
+    {
+      "id": 595,
+      "answer": "Manual - Hand Wash"
+    },
+    {
+      "id": 4134,
+      "answer": "N/A"
+    },
+    {
+      "id": 594,
+      "answer": "Self-Serve"
+    }
+  ]
+} 
+===== PAGE 64 =====
+Set Up Endpoints63
+© 2022 Talage
+3.4.4.3Select List Question Sample Response
+  {
+           "typeId": 3,
+           "talageQuestionId": 3037,
+           "text": "What is the business's annual employee turnover rate?",
+           "typeDesc": "Select List",
+           "answers": [
+               {
+                   "default": true,
+                   "answerId": 7500,
+                   "answer": "0-25%",
+                   "id": 7500,
+                   "question": 3037
+               },
+               {
+                   "answerId": 7501,
+                   "answer": "26-35%",
+                   "id": 7501,
+                   "question": 3037
+               },
+               {
+                   "answerId": 7502,
+                   "answer": "36-50%",
+                   "id": 7502,
+                   "question": 3037
+               },
+               {
+                   "answerId": 7503,
+                   "answer": "51-100%",
+                   "id": 7503,
+                   "question": 3037
+               }
+           ],
+           "categoryName": "Business",
+           "categorySortNumber": 1,
+           "sortRanking": 20,
+           "id": 3037,
+           "type": "Select List"
+       }
+===== PAGE 65 =====
+Talage Insurance API64
+© 2022 Talage
+3.4.4.4Multiple-line Text Question Sample Response
+Enter topic text here. {
+    "typeId": 4,
+    "talageQuestionId": 3143,
+    "parent": 3142,
+    "parent_answer": 7410,
+    "text": "Does the applicant provide transportation to more than five employees in a single
+vehicle?",
+    "typeDesc": "Text - Multiple Lines",
+    "answers": [],
+    "categoryName": "employee",
+    "categorySortNumber": 2,
+    "sortRanking": 10,
+    "id": 3143,
+    "type": "Text - Multiple Lines"
+},
+===== PAGE 66 =====
+Set Up Endpoints65
+© 2022 Talage
+3.4.4.5Single-line Text Question Sample Response
+{
+    "typeId": 5,
+    "talageQuestionId": 2241,
+    "text": "What is the maximum number of employees per shift at any one location?",
+    "typeDesc": "Text - Single Line",
+    "answers": [],
+    "categoryName": "employee",
+    "categorySortNumber": 2,
+    "sortRanking": 10,
+    "inputType": "number",
+    "maxLength": 500,
+    "minValue": 0,
+    "id": 2241,
+    "type": "Text - Single Line"
+},
+===== PAGE 67 =====
+Talage Insurance API66
+© 2022 Talage
+3.5Step 5: Quote and Bind Set Up
+Below are the steps for starting the Quoting process with Carriers as well as binding
+Quotes, submitting binds, and marking them as bound. 
+Outlined below are the key elements for successful and unsuccessful Quotes. Not all
+insurance carriers bind Quotes in the same way. For example, API Binding is available
+with limited Carriers. Since not all Quotes are "bindable." you must set up a structure
+that allows you to purchase Quotes using all of the following fields. 
+For a list of Carriers that allow binding via API contact Talage 
+See also: Contact Talage Help
+Elements of Successful Quotes 
+Field Description
+quoteId Unique identifier for a specific Quote.
+Required: Yes
+isBindable True:  The Quote can be bound using Bind Quote
+Endpoint
+False: Another method must be used to bind the
+Quote
+Required: Yes
+quoteLink This provides a link to the Quote in the insurance
+carrier's portal
+Required: No
+purchaseLink This provides a link to the insurance carrier to buy
+the Policy.
+Required: No
+talageInsurerPaymentPlansOptional: If the insurance carrier offers payment
+plans, this child object holds information about the
+payment plan options.
+Required: No
+===== PAGE 68 =====
+Set Up Endpoints67
+© 2022 Talage
+Elements of Unsuccessful Quotes 
+Field Description
+quoteId Unique identifier for a specific Quote.
+Required: Yes
+log A record of the Request and Response traffic that's
+sent and received 
+Required: Yes
+reasons This is a plain text message, providing the reason
+the carrier declined to provide a Quote on the
+Application.
+message This is a message to the Agent, providing reason
+the carrier declined to provide a Quote on the
+Application.
+Quote Statuses
+Note: Search Criteria does not filter based on these statuses. 
+API Result
+ Description
+initiated When an Application is submitted for Quotes, a Quote with
+status initiated is created for each Carrier the Application is
+submitted. This is used to track for timeouts.
+quoteStatusId: 0
+Required: Yes
+error This is a message that indicates there was an error on the
+insurance carrier's end. 
+quoteStatusId: 10
+Required:  No
+===== PAGE 69 =====
+Talage Insurance API68
+© 2022 Talage
+Quote Statuses (continued)
+API Result
+ Description
+outage There was an outage when communicating with the carrier.
+The carrier didn't return their response within the 5 minute
+timeout limit. 
+quoteStatusId: 12
+Required: No
+autodeclined The insurance carrier automatically declined the Application
+because it was "out of appetite" (e.g. don't cover industry, the
+activity, the area or a combination of these). .
+quoteStatusId: 15
+quoteStatusDescription: Auto Declined
+Required: No
+declined The insurance carrier declined the Application for a reason
+other than the reasons that trigger automatic declines. 
+quoteStatusId: 20
+Required: No
+ACORDEmailedThis is an alternative way to submitt an Application for review.
+It entails filling out an ACORD Form and sending it to the
+carrier. 
+Note: Currently, this is applicable only to Markel Fitness.
+quoteStatusId: 30
+Required: No
+referred The Application was referred to underwriting with any price
+indication.
+quoteStatusId: 40
+Required: No
+===== PAGE 70 =====
+Set Up Endpoints69
+© 2022 Talage
+Quote Statuses (continued)
+API Result
+ Description
+quoted This indicates the Quote was successful. It includes an 
+amount field and an insurerPaymentPlans object that will
+detail the carrier's payment plan options.
+quoteStatusId: 50
+Required: No
+quoted_referredThe Application was referred to Underwriting with a Price
+Indication given.
+quoteStatusId: 55
+Required: No
+dead This status indicates the Client doesn't plan to buy Policy. 
+Note: This status is entered manually through the Agency
+Portal; it can't be updated through the API.
+quoteStatusId: 58
+Required: No
+bind_requestedThis was submitted to the Carrier to bind the Quote. This
+status is set by the Request Bind Endpoint. 
+Go to: Submit a Bind 
+quoteStatusId: 60
+Required: No
+bind_requested
+_referred
+This had previously been referred (i.e. quote_referred status)
+and has been submitted to be purchased. 
+quoteStatusId: 65
+Required: No
+bound This Quote is Bound.
+quoteStatusId: 100
+Required: No
+===== PAGE 71 =====
+Talage Insurance API70
+© 2022 Talage
+3.5.1Start Quoting
+You'll use the Request Quotes Endpoint to submit an Application for review by Talage's
+integrated insurance carriers. 
+You can confirm an Application is complete prior to submitting it for Quotes.
+To do that Go to: Validate Application
+Although Talage allows insurance carriers up to five minutes to respond to
+Requests for Quotes, most will have a Quote available within minutes.  If a Quote
+is not available after five minutes, the status is automatically assigned to 'outage.'
+ 
+See also: Step 5: Quote and Bind Set Up
+You can use the Check for Quotes Endpoint to get the Quotes as they became
+available. Or, you can wait five minutes to get all Quotes at once. 
+To do that Go to: Check for Quotes
+The following instructions assume you are already logged in. 
+To do that Go to: Authentication
+Required Field: To begin the Quoting Process, you must have the relevant
+applicationId. 
+For help finding this identifier Go to: Get Application List
+Below is Sample Code and a Sample Response to show usage for WC and BOP.
+Sample Code: PUT Request Quotes 
+https://demoapi.talageins.com/v1/api/application/quote
+Sample Request
+{
+    "applicationId":""
+}
+===== PAGE 72 =====
+Set Up Endpoints71
+© 2022 Talage
+3.5.2Check for Quotes
+You can use the Check for Quotes Endpoint to check on Quotes that may be available
+and determine whether the Quoting Process has been completed.  
+After an Application is submitted for Quotes, some carriers will begin responding within
+10 seconds. Most carriers will respond between 30 - 60 seconds. After five minutes, the
+Quoting Process is completed.  If a carrier doesn't respond within five minutes, the
+status is automatically assigned to 'outage.'  
+The following instructions assume you are already logged in and submitted an
+Application. To do that Go to: Authentication, Start Quoting
+See also: Create Application, Overview, Common Elements
+Note: Do not poll this Endpoint more frequently than once every 5 seconds.
+Required Field: To check for Quotes, you must have the relevant applicationId.
+For help finding this identifier Go to: Get Application List
+Below are two possible outcomes: 
+1. Quoted Application received at least one successful Quote 
+To bind one of those Quotes Go to:  Bind a Quote
+Note: After an Application is successfully Quoted, it can no longer be
+updated. 
+2. Denied Application did not receive a successful Quote
+If an Application doesn't receive a successful Quote, the Application must
+be modified and resubmitted. 
+===== PAGE 73 =====
+Talage Insurance API72
+© 2022 Talage
+Below is Sample Code and Sample Responses that show usage for both outcomes:  
+Sample Code: GET Check for Quotes
+https://demoapi.talageins.com/v1/api/application/{appId}/quotes
+The Response Body has a field 'complete' after the Quoting process is finished, and an
+array of Quote objects. 
+If complete = 'true,' the Quoting process is finished. 
+No new Quotes will be added to the array.
+If complete = 'false,' the Quoting process is not finished.  
+Quotes are still out for review and may be added to the array. 
+Unsuccessful Quote (Statuses 10-20)
+This Quote will be included in the list of Successful Quotes and will
+indicate carrier and the reason the Quote failed.
+1. Sample Response: Quoted Application (one or more Successful Quote)
+{
+           "applicationId": "5c5a1bd6-4609-4584-91c3-68e1042a2709",
+           "agencyLocationId": 1,
+           "isBindable": true,
+           "bound": false,
+           "handledByTalage": false,
+           "talageWholesale": false,
+           "isManualQuote": false,
+           "active": true,
+           "agencyId": 1,
+           "agencyNetworkId": 1,
+           "quotingAgencyId": 1,
+           "insurerId": 1,
+           "policyType": "WC",
+           "quoteTimeSeconds": 7,
+           "quotingStartedDate": "2022-06-01T19:06:38.001Z",
+           "apiResult": "quoted",
+           "quoteStatusId": 50,
+           "quoteStatusDescription": "Quoted",
+           "limits": {
+               "Employers Liability Per Occurrence": "100000",
+               "Employers Liability Disease Per Employee": "500000",
+               "Employers Liability Disease Policy Limit": "100000"
+           },
+           "quoteCoverages": [],
+           "talageInsurerPaymentPlans": [
+               {
+                   "IsDirectDebit": false,
+===== PAGE 74 =====
+Set Up Endpoints73
+© 2022 Talage
+                   "invoices": [],
+                   "paymentPlanId": 1,
+                   "insurerPaymentPlanId": "DB",
+                   "insurerPaymentPlanDescription": "100% Deposit Payment",
+                   "NumberPayments": 0,
+                   "TotalPremium": 272,
+                   "installmentPayment": 0,
+                   "DownPayment": 272,
+                   "TotalCost": 272,
+                   "DepositPercent": 100
+               }
+           ],
+           "quoteId": "0a398a4b-1535-457b-ad68-19fd821f3e7e",
+           "updatedAt": "2022-06-01T19:06:38.022Z",
+           "createdAt": "2022-06-01T19:06:38.022Z",
+           "amount": 272,
+           "insurerPaymentPlans": [
+               {
+                   "...
+           "status": "Quoted",
+           "displayStatus": "Quoted",
+           "number": "EIG3698501-00",
+           "reasons": "",
+           "logo": "images/insurers/employers.png",
+           "insurerName": "Employers",
+           "website": "http://employers.com/",
+           "policyTypeName": "Workers' Compensation"
+       },
+....           
+}
+Next step: Bind one of the successful Quotes Go to:  Bind a Quote
+2. Sample Response:  Denied Application (no successful Quotes) 
+ {
+        "policy_type": "GL",
+        "status": "declined",
+        "message": "Chubb has declined to offer you coverage at this time",
+        "insurer": {
+            "id": 7,
+            "logo": " https://demo.talageins.com/images/insurers/chubb.png",
+            "name": "Chubb",
+            "rating": "A++ (Superior)"
+        }
+    }
+===== PAGE 75 =====
+Talage Insurance API74
+© 2022 Talage
+3.5.3Bind a Quote
+To bind the Quote, you'll use the Bind Quotes Endpoint.  You can only bind successful
+Quotes. A Quote is successful if it has the attribute, "isBindable":true.  
+Note: Passing the Bind Quote Endpoint does not start the buying process. In
+order to begin the buying process, the Client must make a payment directly to the
+insurance carrier.
+Required Fields
+You must pass these three properties: 
+applicationId
+quoteId
+selected payment plan, if applicable 
+For help finding these identifiers Go to: Get Application List  
+The following instructions assume you are logged in and have a successful
+Quote that can be bound. To do that Go to: Authentication, Start Quoting
+See also: Overview, Common Elements
+Below is Sample Code and a Sample Response to show usage for WC and BOP.
+Sample Code: PUT Bind a Quote
+https://demoapi.talageins.com/v1/api/application/bind-quote
+Sample Request
+{
+    "quoteId": 28380,
+    "paymentPlanId": 2,
+    "applicationId": ""
+}
+===== PAGE 76 =====
+Set Up Endpoints75
+© 2022 Talage
+3.5.4Submit a Bind
+You'll use the Request Bind Endpoint to submit a Bind to the Carrier. This sends a
+Request to the appropriate recipient. This recipient is defined during your Onboarding
+Process and can be updated in your Agency Settings.  Usually this recipient is a retail
+agent, wholesale agency, or Talage as a wholesale agency. 
+The Request must contain the information needed for the Agent to bind the Quote. After
+the Quote is bound, the Agent will mark the Quote as 'Bound' through the Agency Portal.
+Required Fields
+You must pass these three properties: 
+applicationId
+quoteId
+selected payment plan, if applicable 
+For help finding these identifiers Go to: Get Application List 
+The following instructions assume you are already logged in and have a
+successful Quote that can be bound. 
+To do that Go to: Authentication, Start Quoting
+See also: Overview, Common Elements
+Below is Sample Code and a Sample Response to show usage for WC and BOP.
+Sample Code: PUT Request Bind
+https://demoapi.talageins.com/v1/api/application/request-bind-quote
+Sample Request
+{
+   "applicationId": "4ba59353-10a9-47fe-ac3f-c7c786af4ff9",
+   "quoteId": "9165519",
+   "paymentPlanId": 2,
+   "policyNumber": "2233"
+}
+Sample Response
+ "bound": true
+===== PAGE 77 =====
+Talage Insurance API76
+© 2022 Talage
+3.5.5Mark as Bound
+When you have a Successful Quote that can't be bound using the above Endpoints,
+you'll use the Mark As Bound Endpoint to update the status of the Quote as 'bound.' 
+Required Fields
+You must pass these three properties: 
+applicationId
+quoteId
+selected payment plan, if applicable
+For help finding these identifiers Go to: Get Application List 
+The following instructions assume you are already logged in and have a
+successful Quote that can be bound. 
+To do that Go to: Authentication, Start Quoting
+See also: Overview, Common Elements
+Below is Sample Code and a Sample Response:
+Sample Code: PUT Mark as Bound
+https://demoapi.talageins.com/v1/api/application/mark-quote-bound
+{
+   "applicationId": "4ba59353-10a9-47fe-ac3f-c7c786af4ff9",
+   "quoteId": "9165519",
+   "markAsBound": true,
+   "premiumAmount": 98765,
+   "policyNumber": "2233"
+}
+Sample Response
+{  
+ "bound": true
+}
+===== PAGE 78 =====
+Set Up Endpoints77
+© 2022 Talage
+4Other Capabilities
+Talage is at the forefront of innovation. As a result, our API is constantly evolving. 
+Outlined below are some additional capabilities offered through our API:  
+Appetite Check
+This API identifies which insurers are "in Appetite" for an Application. 
+Appetite Checks use industry code, location and policy type.
+Go to: Appetite Check
+NCCI Look up
+This API allows users to enter NCCI Codes (National Council on
+Compensation Insurance) to look up Talage Activity Code for Payroll. 
+Go to: NCCI Look Up
+Required Fields
+You can use this API to get a list of Required Fields.
+Go to: Required Fields
+Price Indication
+This API gives you a Price Indication to help you decide whether to submit
+an Application for a full Quote.  It returns a non-binding rate for an
+anticipated premium.
+Go to: Price Indication
+===== PAGE 79 =====
+Talage Insurance API78
+© 2022 Talage
+4.1Appetite Check
+You can use this API to identify which insurers are "in Appetite" for an Application. This
+helps Agents determine whether it's worth submitting an Application. As a result, this
+API is not based on an Application. There are no parameters, just three Required
+Fields. One of four Statuses will be returned. 
+Required Fields: You must have a saved Application which will include the following:  
+Industry Code
+Location
+At least one Policy Type
+Status Codes 
+The Appetite Check will return one of these four statuses: 
+In Appetite
+Out of Appetite
+Unable to Determine 
+Needs more information
+Sample Code: GET Check Appetite
+https://demoapi.talageins.com//v1/api/application/{appId}/checkappetite
+Sample Response  
+[
+    {
+        "policyTypeCd": "WC",
+        "appetiteStatus": "In Appetite"
+    },
+    {
+        "policyTypeCd": "BOP",
+        "appetiteStatus": "In Appetite"
+    },
+    {
+        "policyTypeCd": "CYBER",
+        "appetiteStatus": "Unable to determine"
+    }
+]
+===== PAGE 80 =====
+Other Capabilities79
+© 2022 Talage
+4.2NCCI Look Up
+This API allows users to enter NCCI Codes (National Council on Compensation
+Insurance) to look up Talage Activity Code for Payroll. 
+PARMS
+ncci_code
+ Description: This is the National Council on Compensation Insurance
+Code used for Payroll. 
+territory Description: This is the relevant state for the Application.  
+Required: Yes
+Possible Values: Two-letter state code 
+(e.g. AL, AK, AZ, AR...)
+Sample Code: GET NCCI Lookup
+https://demoapi.talageins.com//v1/api/application/{appId}/ncci-activity-codes?
+territory=CA&ncci_code=9586
+Sample Response 
+[
+    {
+      "alternateNames": [],
+      "activityCodeId": 2889,
+      "description": "Barber/Beauty Shop, Salon, or Spa Operations",
+      "attributes": "",
+      "id": 2889,
+      "ncciCode": "9586",
+      "ncciSubCode": "00",
+"ncciDesc": "Barber Shops, Hair Styling Salons and Personal Appearance Services - all
+employees"
+    }
+]
+===== PAGE 81 =====
+Talage Insurance API80
+© 2022 Talage
+4.3Required Fields
+You can use this API to get a list of Required Fields.
+Required Field: You must have a saved Application that includes at least one Policy
+Type selected. 
+Sample Code: GET Required Fields
+https://demoapi.talageins.com//v1/api/application/{appId}/getrequiredfields
+Sample Response 
+{
+    "owner": {
+        "requirement": 10,
+        "officerTitle": {
+            "requirement": 10
+        },
+        "birthdate": {
+            "requirement": 10
+        },
+        "ownership": {
+            "requirement": 10
+        },
+        "payroll": {
+            "requirement": 10
+        }
+    },
+    "location": {
+        "requirement": 0,
+        "activityPayrollList": {
+            "requirement": 10
+        },
+        "buildingLimit": {
+            "requirement": 0
+        },
+        "businessPersonalPropertyLimit": {
+            "requirement": 0
+        },
+        "own": {
+            "requirement": 0
+        },
+        "numStories": {
+            "requirement": 0
+        },
+        "constructionType": {
+            "requirement": 0
+        },
+        "yearBuilt": {
+            "requirement": 0
+        },
+===== PAGE 82 =====
+Other Capabilities81
+© 2022 Talage
+        "unemployment_num": {
+            "requirement": 10
+        },
+        "full_time_employees": {
+            "requirement": 0
+        },
+        "part_time_employees": {
+            "requirement": 0
+        },
+        "square_footage": {
+            "requirement": 0
+        },
+        "bop": {
+            "requirement": 0,
+            "sprinklerEquipped": {
+                "requirement": 0
+            },
+            "fireAlarmType": {
+                "requirement": 0
+            },
+            "roofingImprovementYear": {
+                "requirement": 0
+            },
+            "wiringImprovementYear": {
+                "requirement": 0
+            },
+            "heatingImprovementYear": {
+                "requirement": 0
+            },
+            "plumbingImprovementYear": {
+                "requirement": 0
+            }
+        }
+    },
+    "policy": {
+        "requirement": 0,
+        "fireCode": {
+            "requirement": 0,
+            "required": {
+                "requirement": 0
+            }
+        }
+    },
+    "grossSalesAmt": {
+        "requirement": 0
+    },
+    "ein": {
+        "requirement": 10
+    },
+    "website": {
+        "requirement": 5
+    },
+    "yearsOfExp": {
+===== PAGE 83 =====
+Talage Insurance API82
+© 2022 Talage
+        "requirement": 10
+    }
+}
+4.4Price Indication
+This API gives you a Quote Check to help you decide whether to submit an Application
+for a full Quote.  It returns a non-binding rate for anticipated premium that may change
+when additional details are provided on the Application. 
+Successful:  The Quote is stored with the Price Indication.  
+Unsuccessful: If it's Out of Appetite or no Quotes were received, it's not saved. 
+4.4.1PUT Price Indication
+Sample Code: PUT Price Indication
+https://demoapi.talageins.com/v1/api/application/price
+Sample Request
+{
+    "id": "289d1022-e4fe-4032-a495-774e40bd5f1f"
+}
+Sample Response 
+{
+    "gotPricing": true,
+    "price": 5954,
+    "outOfAppetite": false,
+    "pricingError": false
+}
+4.4.2GET Check for Price Indication
+Sample Code: GET Check for Price Indication
+https://demoapi.talageins.com/v1/api/application/{appId}/quotes
+Sample Response: GET Check for Price Indication  
+{
+   "applicationId": “7b0243ab-9712-4cda-9aa0-a74543ba2a13”,
+   "agencyLocationId": 216,
+   "lockAgencyLocationId": false,
+   "appStatusId": 35,
+   "lastStep": 0,
+   "progress": "complete",
+   "status": "price_indication",
+   "solepro": false,
+===== PAGE 84 =====
+Other Capabilities83
+© 2022 Talage
+   "wholesale": false,
+   "coverageLapseWC": false,
+   "agencyPortalCreated": true,
+   "apiCreated": true,
+   "abandonedEmail": false,
+   "abandonedAppEmail": false,
+}
