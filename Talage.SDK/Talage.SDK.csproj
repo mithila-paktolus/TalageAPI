@@ -13,8 +13,8 @@
     <Description>Talage API SDK.</Description>
     <PackageTags>talage;sdk;api</PackageTags>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/mithila-paktolus/TalageIntegration.git</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/mithila-paktolus/TalageIntegration</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mithila-paktolus/TalageAPI.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/mithila-paktolus/TalageAPI</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
 
     <IncludeSymbols>true</IncludeSymbols>

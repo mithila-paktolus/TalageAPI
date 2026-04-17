@@ -13,6 +13,10 @@ using Talage.Authentication;
 using TalageIntegration.API.Filters;
 using TalageIntegration.API.Middleware;
 using Talage.SDK.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using Talage.SDK.EntityFramework.Repository;
+using TalageIntegration.API.Services;
+using Talage.SDK.EntityFramework.TalageIntegration.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,8 +34,13 @@ builder.Services.AddProblemDetails();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<ITalageIntegrationRepository, TalageIntegrationRepository>();
+builder.Services.AddScoped<IQuoteStatusService, QuoteStatusService>();
 builder.Services.AddScoped<ValidateModelAttribute>();
 builder.Services.AddScoped<IAuth0JwtService, Auth0JwtService>();
+
+builder.Services.AddDbContext<TalageIntegrationContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TalageIntegration")));
 
 builder.Services.AddTalageSdk(builder.Configuration, settings =>
 {

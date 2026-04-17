@@ -1,16 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Talage.SDK.Internal.Persistence;
+using Talage.SDK.EntityFramework.Repository;
+using Talage.SDK.EntityFramework.TalageIntegration.Model;
 
 namespace Talage.SDK.Internal.Auth;
 
-public sealed class AccessTokenStore(IDbContextFactory<TalageIntegrationDbContext> dbContextFactory, IHttpContextAccessor httpContextAccessor) : IAccessTokenStore
+public sealed class AccessTokenStore(ITalageIntegrationRepository repository, IHttpContextAccessor httpContextAccessor) : IAccessTokenStore
 {
     public async Task<(string Token, string TokenType, DateTimeOffset Expires)?> GetActiveAsync(CancellationToken cancellationToken)
     {
-        await using var db = await dbContextFactory.CreateDbContextAsync(cancellationToken);
-
-        var active = await db.AccessTokens
+        var active = await repository.GetAll<AccessToken>()
             .AsNoTracking()
             .Where(x => x.IsActive)
             .OrderByDescending(x => x.CreatedDate)
@@ -27,14 +26,12 @@ public sealed class AccessTokenStore(IDbContextFactory<TalageIntegrationDbContex
 
     public async Task ReplaceActiveAsync(string token, string tokenType, DateTimeOffset expires, CancellationToken cancellationToken)
     {
-        await using var db = await dbContextFactory.CreateDbContextAsync(cancellationToken);
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var username = httpContextAccessor.HttpContext?.User?.Identity?.Name ?? "System";
 
         var now = DateTime.Now;
         var expiresDate = expires.DateTime;
 
-        var activeTokens = await db.AccessTokens
+        var activeTokens = await repository.GetAll<AccessToken>()
             .Where(x => x.IsActive)
             .OrderByDescending(x => x.CreatedDate)
             .ToListAsync(cancellationToken);
@@ -50,7 +47,7 @@ public sealed class AccessTokenStore(IDbContextFactory<TalageIntegrationDbContex
 
         if (current is null)
         {
-            db.AccessTokens.Add(new AccessTokenEntity
+            repository.Add(new AccessToken
             {
                 Token = token,
                 TokenType = tokenType,
@@ -76,19 +73,16 @@ public sealed class AccessTokenStore(IDbContextFactory<TalageIntegrationDbContex
             current.IsActive = true;
         }
 
-        await db.SaveChangesAsync(cancellationToken);
-
-        await transaction.CommitAsync(cancellationToken);
+        await repository.SaveAsync();
     }
 
     public async Task DeactivateAllAsync(CancellationToken cancellationToken)
     {
-        await using var db = await dbContextFactory.CreateDbContextAsync(cancellationToken);
         var username = httpContextAccessor.HttpContext?.User?.Identity?.Name ?? "System";
 
         var now = DateTime.Now;
 
-        var activeTokens = await db.AccessTokens
+        var activeTokens = await repository.GetAll<AccessToken>()
             .Where(x => x.IsActive)
             .ToListAsync(cancellationToken);
 
@@ -99,7 +93,7 @@ public sealed class AccessTokenStore(IDbContextFactory<TalageIntegrationDbContex
             token.UpdatedBy = username;
         }
 
-        await db.SaveChangesAsync(cancellationToken);
+        await repository.SaveAsync();
     }
 }
 

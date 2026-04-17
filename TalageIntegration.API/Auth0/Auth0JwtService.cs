@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Prime.ServicesV2.Auth0.Models;
 using System;
-using TalageIntegration.Domain.Entities;
-using Talage.SDK.Internal.Persistence;
+using Talage.SDK.EntityFramework.Repository;
+using Talage.SDK.EntityFramework.TalageIntegration.Model;
 
 namespace Prime.ServicesV2.Auth0
 {
@@ -20,13 +20,13 @@ namespace Prime.ServicesV2.Auth0
 	public class Auth0JwtService : IAuth0JwtService
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly TalageIntegrationDbContext _context;
+        private readonly ITalageIntegrationRepository _repository;
 
         public Auth0JwtService(
             IHttpClientFactory httpClientFactory,
-            TalageIntegrationDbContext context)
+            ITalageIntegrationRepository repository)
         {
-            _context = context;
+            _repository = repository;
             _httpClientFactory = httpClientFactory;
         }
 
@@ -101,7 +101,7 @@ namespace Prime.ServicesV2.Auth0
 
         private JwtDto GetStoredJwt(Auth0Tenant tenant, Auth0Application application)
         {
-            var jwt = _context.Jwt
+            var jwt = _repository.GetAll<Jwt>()
                 .Where(x => x.SourceApplication == application.Name)
                 .Where(x => x.Audience == application.Audience)
                 .Where(x => x.Tenant == tenant.Name)
@@ -121,7 +121,7 @@ namespace Prime.ServicesV2.Auth0
 
         public void SaveOrUpdateJwt(JwtDto jwt, string applicationName)
         {
-            var record = _context.Jwt
+            var record = _repository.GetAll<Jwt>()
                 .Where(x => x.SourceApplication == applicationName)
                 .Where(x => x.Audience == jwt.Audience)
                 .Where(x => x.Tenant == jwt.Tenant)
@@ -140,7 +140,7 @@ namespace Prime.ServicesV2.Auth0
                     ExpirationDate = jwt.ExpirationDate
                 };
 
-                _context.Jwt.Add(newRecord);
+                _repository.Add(newRecord);
             }
             else
             {
@@ -149,10 +149,11 @@ namespace Prime.ServicesV2.Auth0
                 record.Tenant = jwt.Tenant;
                 record.CreatedDate = DateTime.Now;
                 record.ExpirationDate = jwt.ExpirationDate;
+                _repository.MarkForUpdate(record);
             }
             try
             {
-                _context.SaveChanges();
+                _repository.Save();
             }
             catch (Exception)
             {

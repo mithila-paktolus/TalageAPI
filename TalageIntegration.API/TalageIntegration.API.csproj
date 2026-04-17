@@ -31,4 +31,8 @@
   <ItemGroup>
     <Folder Include="DatabaseScripts\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Talage.SDK\Talage.SDK.csproj" />
+  </ItemGroup>
 </Project>

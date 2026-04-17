@@ -6,7 +6,7 @@ using TalageIntegration.Shared.Models;
 
 namespace TalageIntegration.API.Controllers;
 
-[Authorize]
+//[Authorize]
 [ApiController]
 [Route("api/applications")]
 public sealed class ApplicationsController(

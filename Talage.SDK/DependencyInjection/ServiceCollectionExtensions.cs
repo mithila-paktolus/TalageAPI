@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Headers;
+using System.Net.Http.Headers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +8,8 @@ using Talage.SDK.Interfaces;
 using Talage.SDK.Logging;
 using Talage.SDK.Services;
 using Talage.SDK.Internal.Auth;
-using Talage.SDK.Internal.Persistence;
+using Talage.SDK.EntityFramework.Repository;
+using Talage.SDK.EntityFramework.TalageIntegration.Context;
 using TalageIntegration.Shared.Exceptions;
 using TalageApiHttpClient = Talage.SDK.Internal.ApiClient.TalageApiClient;
 using TalageAuthenticationHandler = Talage.SDK.Internal.ApiClient.TalageAuthenticationDelegatingHandler;
@@ -34,12 +35,12 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IConfigureOptions<TalageApiOptions>, TalageApiOptionsConfigurator>();
         services.Configure<TalageApiOptions>(_ => { });
 
-        var connectionString = configuration.GetConnectionString("AppLog");
+        var connectionString = configuration.GetConnectionString("TalageIntegration");
         if (!string.IsNullOrWhiteSpace(connectionString))
         {
-            services.AddDbContextFactory<TalageIntegrationDbContext>(options => options.UseSqlServer(connectionString));
-            services.AddScoped(sp => sp.GetRequiredService<IDbContextFactory<TalageIntegrationDbContext>>().CreateDbContext());
-            services.AddSingleton<IAccessTokenStore, AccessTokenStore>();
+            services.AddDbContext<TalageIntegrationContext>(options => options.UseSqlServer(connectionString));
+            services.AddScoped<ITalageIntegrationRepository, TalageIntegrationRepository>();
+            services.AddScoped<IAccessTokenStore, AccessTokenStore>();
             services.AddScoped<Talage.SDK.Internal.Interfaces.IApplicationCreationLogService, ApplicationCreationLogService>();
         }
         else
@@ -49,8 +50,8 @@ public static class ServiceCollectionExtensions
         }
 
         services.AddTransient<TalageAuthenticationHandler>();
-        services.AddSingleton<ITalageTokenManager, TalageTokenManager>();
-        services.AddSingleton<ITalageTokenProvider, TalageTokenProvider>();
+        services.AddScoped<ITalageTokenManager, TalageTokenManager>();
+        services.AddScoped<ITalageTokenProvider, TalageTokenProvider>();
         services.AddSingleton<Talage.SDK.Internal.Interfaces.IQuotePollingGuard, QuotePollingGuard>();
 
         services.AddHttpClient<Talage.SDK.Internal.Interfaces.ITelangeService, TelangeService>((serviceProvider, client) =>

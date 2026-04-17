@@ -1,28 +1,26 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Talage.SDK.Internal.Interfaces;
-using Talage.SDK.Internal.Persistence;
+using Talage.SDK.EntityFramework.Repository;
+using Talage.SDK.EntityFramework.TalageIntegration.Model;
 
 namespace Talage.SDK.Internal.Services;
 
 public sealed class ApplicationCreationLogService(
-    IDbContextFactory<TalageIntegrationDbContext> dbContextFactory,
+    ITalageIntegrationRepository repository,
     ILogger<ApplicationCreationLogService> logger) : IApplicationCreationLogService
 {
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
 
     public async Task AddApplicationLogAsync(string applicationId, object response, string user, bool isUpdate)
     {
-
         var responseJson = SerializeResponse(response);
         var normalizedUser = string.IsNullOrWhiteSpace(user) ? null : user.Trim();
 
         try
         {
-            await using var dbContext = await dbContextFactory.CreateDbContextAsync();
-
-            var entity = new ApplicationCreationLogEntity
+            var entity = new ApplicationCreationLog
             {
                 ApplicationId = applicationId,
                 ResponseJson = responseJson,
@@ -33,8 +31,8 @@ public sealed class ApplicationCreationLogService(
                 UpdatedBy = isUpdate ? normalizedUser : null
             };
 
-            dbContext.ApplicationCreationLogs.Add(entity);
-            await dbContext.SaveChangesAsync();
+            repository.Add(entity);
+            await repository.SaveAsync();
         }
         catch (Exception ex)
         {
@@ -59,9 +57,7 @@ public sealed class ApplicationCreationLogService(
 
         try
         {
-            await using var dbContext = await dbContextFactory.CreateDbContextAsync();
-
-            var entity = await dbContext.ApplicationCreationLogs.FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await repository.GetAll<ApplicationCreationLog>().FirstOrDefaultAsync(x => x.Id == id);
             if (entity is null)
             {
                 throw new KeyNotFoundException($"ApplicationCreationLog {id} was not found.");
@@ -71,7 +67,7 @@ public sealed class ApplicationCreationLogService(
             entity.LastUpdated = DateTime.Now;
             entity.UpdatedBy = updatedBy;
 
-            await dbContext.SaveChangesAsync();
+            await repository.SaveAsync();
         }
         catch (Exception ex)
         {
